@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import GlobalStyle from '../global';
+import GlobalStyle from '../../global';
 
-import ApplicationRoutes from '../routes';
+import Header from '../Header';
+
+import ApplicationRoutes from '../../routes';
 
 const App = () => (
   <BrowserRouter>
+    <Header />
     <ApplicationRoutes />
 
     <GlobalStyle />

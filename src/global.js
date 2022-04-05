@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-import background from './assets/background.svg';
+import background from './assets/images/background.svg';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
