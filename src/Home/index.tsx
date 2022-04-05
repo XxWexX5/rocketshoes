@@ -3,7 +3,7 @@ import React from 'react';
 
 import ContainerRocketshoes from './styles';
 
-const App = () => {
+const Home = () => {
   return (
     <ContainerRocketshoes>
       <p>fdfdhfdhfdj</p>
@@ -11,4 +11,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
