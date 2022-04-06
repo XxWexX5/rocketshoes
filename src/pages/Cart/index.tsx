@@ -14,7 +14,7 @@ export const Cart = () => (
         <tr className="row">
           <th className="column" />
           <th className="column">Produto</th>
-          <th className="column">Qtd</th>
+          <th className="column column-qtd">Qtd</th>
           <th className="column">Subtotal</th>
           <th className="column" />
         </tr>

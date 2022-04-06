@@ -17,6 +17,10 @@ export const ProductTable = styled.table`
       text-align: left;
       padding-top: 12px;
       text-transform: uppercase;
+
+      .column-qtd {
+        padding-left: 3.5%;
+      }
     }
   }
 
