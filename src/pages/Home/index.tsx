@@ -19,7 +19,7 @@ interface Product {
   amount: number;
 }
 
-const Home = ({ dispatch, productsTotal }: any) => {
+const Home = ({ dispatch, allProducts }: any) => {
   const [dataApi, setDataApi] = useState([]);
 
   const getProducts = async () => {
@@ -47,6 +47,10 @@ const Home = ({ dispatch, productsTotal }: any) => {
     <ProductList>
       {dataApi &&
         dataApi.map((product: Product) => {
+          const productAmount = allProducts.filter(
+            (productList: any) => productList.id === product.id,
+          );
+
           return (
             <Product key={product.id}>
               <div className="container-image">
@@ -62,7 +66,7 @@ const Home = ({ dispatch, productsTotal }: any) => {
               >
                 <div className="wrapper">
                   <MdAddShoppingCart size={16} color="#FFFFFF" />{' '}
-                  {productsTotal}
+                  {(productAmount[0] && productAmount[0].amount) || 0}
                 </div>
 
                 <span className="text">Adicionar ao carrinho</span>
@@ -75,5 +79,5 @@ const Home = ({ dispatch, productsTotal }: any) => {
 };
 
 export default connect((state: any) => ({
-  productsTotal: state.cart.length,
+  allProducts: state.cart,
 }))(Home);
