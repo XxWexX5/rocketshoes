@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   MdRemoveCircleOutline,
   MdAddCircleOutline,
@@ -6,8 +7,16 @@ import {
 } from 'react-icons/md';
 
 import { ContainerCart, ProductTable, Product, Footer, Total } from './styles';
+interface Product {
+  id: number;
+  image: string;
+  title: string;
+  price: number;
+  priceFormated: string;
+  amount: number;
+}
 
-export const Cart = () => (
+export const Cart = ({ products }: any) => (
   <ContainerCart>
     <ProductTable>
       <thead className="head">
@@ -21,40 +30,43 @@ export const Cart = () => (
       </thead>
 
       <tbody className="body">
-        <Product className="row">
-          <td className="column">
-            <img
-              src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSNFZ2E2HCN4wf9I07oS2f-qVH9ZZaHHY0CWenwMOMZzcfcgFVrhTCwhEx0frYkwDvUWLQuRwOMPw&usqp=CAc"
-              alt="Tênis"
-              className="image"
-            />
-          </td>
-          <td className="column">
-            <strong className="title">Tênis</strong>
-            <span className="text">R$129,90</span>
-          </td>
-          <td className="column">
-            <div className="wrapper-qtd">
-              <button type="button" className="button">
-                <MdRemoveCircleOutline size={20} color="#7159C1" />
-              </button>
+        {products.map((product: Product) => (
+          <Product key={product.id} className="row">
+            <td className="column">
+              <img src={product.image} alt="Tênis" className="image" />
+            </td>
+            <td className="column">
+              <strong className="title">{product.title}</strong>
+              <span className="text">{product.priceFormated}</span>
+            </td>
+            <td className="column">
+              <div className="wrapper-qtd">
+                <button type="button" className="button">
+                  <MdRemoveCircleOutline size={20} color="#7159C1" />
+                </button>
 
-              <input type="number" readOnly value={1} className="input" />
+                <input
+                  type="number"
+                  readOnly
+                  value={product.amount}
+                  className="input"
+                />
 
+                <button type="button" className="button">
+                  <MdAddCircleOutline size={20} color="#7159C1" />
+                </button>
+              </div>
+            </td>
+            <td className="column">
+              <strong className="subtotal">R$258,80</strong>
+            </td>
+            <td className="column">
               <button type="button" className="button">
-                <MdAddCircleOutline size={20} color="#7159C1" />
+                <MdDelete size={20} color="#7159C1" />
               </button>
-            </div>
-          </td>
-          <td className="column">
-            <strong className="subtotal">R$258,80</strong>
-          </td>
-          <td className="column">
-            <button type="button" className="button">
-              <MdDelete size={20} color="#7159C1" />
-            </button>
-          </td>
-        </Product>
+            </td>
+          </Product>
+        ))}
       </tbody>
     </ProductTable>
 
@@ -71,4 +83,8 @@ export const Cart = () => (
   </ContainerCart>
 );
 
-export default Cart;
+const mapStateToProps = (state: any) => ({
+  products: state.cart,
+});
+
+export default connect(mapStateToProps)(Cart);

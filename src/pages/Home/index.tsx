@@ -16,6 +16,7 @@ interface Product {
   title: string;
   price: number;
   priceFormated: string;
+  amount: number;
 }
 
 const Home = ({ dispatch, productsTotal }: any) => {
