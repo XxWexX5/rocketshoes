@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 
+import { connect } from 'react-redux';
+
 import { MdAddShoppingCart } from 'react-icons/md';
 
 import { ProductList, Product } from './styles';
@@ -16,7 +18,7 @@ interface Product {
   priceFormated: string;
 }
 
-const Home = () => {
+const Home = ({ dispatch, productsTotal }: any) => {
   const [dataApi, setDataApi] = useState([]);
 
   const getProducts = async () => {
@@ -33,7 +35,12 @@ const Home = () => {
     getProducts();
   }, []);
 
-  console.log(dataApi);
+  const handleAddToCart = (product: any) => {
+    return dispatch({
+      type: 'ADD_TO_CART',
+      product,
+    });
+  };
 
   return (
     <ProductList>
@@ -47,9 +54,14 @@ const Home = () => {
               <strong className="title">{product.title}</strong>
               <span className="text">{product.priceFormated}</span>
 
-              <button type="button" className="button">
+              <button
+                type="button"
+                className="button"
+                onClick={() => handleAddToCart(product)}
+              >
                 <div className="wrapper">
-                  <MdAddShoppingCart size={16} color="#FFFFFF" /> 3
+                  <MdAddShoppingCart size={16} color="#FFFFFF" />{' '}
+                  {productsTotal}
                 </div>
 
                 <span className="text">Adicionar ao carrinho</span>
@@ -61,4 +73,6 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default connect((state: any) => ({
+  productsTotal: state.cart.length,
+}))(Home);
