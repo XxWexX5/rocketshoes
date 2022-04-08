@@ -15,6 +15,15 @@ export default function cart(state = [], action) {
         }
       });
 
+    case 'DELETE_FROM_CART':
+      return produce(state, (draft) => {
+        const productIndex = draft.findIndex(
+          (product) => product.id === action.productId,
+        );
+
+        draft.splice(productIndex, 1);
+      });
+
     default:
       return state;
   }
