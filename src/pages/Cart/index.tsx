@@ -1,4 +1,5 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
   MdRemoveCircleOutline,
@@ -7,6 +8,8 @@ import {
 } from 'react-icons/md';
 
 import { ContainerCart, ProductTable, Product, Footer, Total } from './styles';
+
+import * as CartActions from '../../store/modules/cart/actions';
 interface Product {
   id: number;
   image: string;
@@ -16,12 +19,9 @@ interface Product {
   amount: number;
 }
 
-export const Cart = ({ products, dispatch }: any) => {
+export const Cart = ({ products, dispatch, removeCart }: any) => {
   const handleDeleteFromCart = (productId: any) => {
-    dispatch({
-      type: 'DELETE_FROM_CART',
-      productId,
-    });
+    dispatch(removeCart(productId));
   };
 
   return (
@@ -100,4 +100,7 @@ const mapStateToProps = (state: any) => ({
   products: state.cart,
 });
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToPros = (dispatch: any) =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToPros)(Cart);

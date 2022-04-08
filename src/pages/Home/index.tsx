@@ -1,6 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 
+import { bindActionCreators } from 'redux';
+
+import * as CartActions from '../../store/modules/cart/actions';
+
 import { connect } from 'react-redux';
 
 import { MdAddShoppingCart } from 'react-icons/md';
@@ -19,7 +23,7 @@ interface Product {
   amount: number;
 }
 
-const Home = ({ dispatch, allProducts }: any) => {
+const Home = ({ dispatch, allProducts, addCart }: any) => {
   const [dataApi, setDataApi] = useState([]);
 
   const getProducts = async () => {
@@ -37,10 +41,7 @@ const Home = ({ dispatch, allProducts }: any) => {
   }, []);
 
   const handleAddToCart = (product: any) => {
-    return dispatch({
-      type: 'ADD_TO_CART',
-      product,
-    });
+    return dispatch(addCart(product));
   };
 
   return (
@@ -78,6 +79,11 @@ const Home = ({ dispatch, allProducts }: any) => {
   );
 };
 
-export default connect((state: any) => ({
+const mapStateToProps = (state: any) => ({
   allProducts: state.cart,
-}))(Home);
+});
+
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
