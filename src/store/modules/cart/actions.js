@@ -11,3 +11,17 @@ export function removeCart(productId) {
     productId,
   };
 }
+
+export function addAmountProduct(productId) {
+  return {
+    type: '@cart/addAmountProducts',
+    productId,
+  };
+}
+
+export function outAmountProduct(productId) {
+  return {
+    type: '@cart/outAmountProducts',
+    productId,
+  };
+}

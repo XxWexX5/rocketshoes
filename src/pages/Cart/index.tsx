@@ -17,11 +17,26 @@ interface Product {
   price: number;
   priceFormated: string;
   amount: number;
+  subtotal: number;
 }
 
-export const Cart = ({ products, dispatch, removeCart }: any) => {
+export const Cart = ({
+  products,
+  dispatch,
+  removeCart,
+  addAmountProduct,
+  outAmountProduct,
+}: any) => {
   const handleDeleteFromCart = (productId: any) => {
     dispatch(removeCart(productId));
+  };
+
+  const handleAddAmoutProduct = (productId: any) => {
+    dispatch(addAmountProduct(productId));
+  };
+
+  const handleOutAmoutProduct = (productId: any) => {
+    dispatch(outAmountProduct(productId));
   };
 
   return (
@@ -49,7 +64,11 @@ export const Cart = ({ products, dispatch, removeCart }: any) => {
               </td>
               <td className="column">
                 <div className="wrapper-qtd">
-                  <button type="button" className="button">
+                  <button
+                    type="button"
+                    className="button"
+                    onClick={() => handleOutAmoutProduct(product.id)}
+                  >
                     <MdRemoveCircleOutline size={20} color="#7159C1" />
                   </button>
 
@@ -60,13 +79,17 @@ export const Cart = ({ products, dispatch, removeCart }: any) => {
                     className="input"
                   />
 
-                  <button type="button" className="button">
+                  <button
+                    type="button"
+                    className="button"
+                    onClick={() => handleAddAmoutProduct(product.id)}
+                  >
                     <MdAddCircleOutline size={20} color="#7159C1" />
                   </button>
                 </div>
               </td>
               <td className="column">
-                <strong className="subtotal">R$258,80</strong>
+                <strong className="subtotal">{product.subtotal}</strong>
               </td>
               <td className="column">
                 <button

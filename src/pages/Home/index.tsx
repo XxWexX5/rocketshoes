@@ -30,6 +30,8 @@ const Home = ({ dispatch, allProducts, addCart }: any) => {
     let { data } = await api.get('/products');
 
     data = data.map((product: Product) => {
+      console.log(product);
+
       return { ...product, priceFormated: formatPrice(product.price) };
     });
 
