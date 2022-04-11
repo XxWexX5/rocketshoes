@@ -7,6 +7,8 @@ import {
   MdDelete,
 } from 'react-icons/md';
 
+import { formatPrice } from '../../utils/format';
+
 import { ContainerCart, ProductTable, Product, Footer, Total } from './styles';
 
 import * as CartActions from '../../store/modules/cart/actions';
@@ -17,7 +19,8 @@ interface Product {
   price: number;
   priceFormated: string;
   amount: number;
-  subtotal: number;
+  subtotal: string;
+  total: string;
 }
 
 export const Cart = ({
@@ -26,6 +29,7 @@ export const Cart = ({
   removeCart,
   addAmountProduct,
   outAmountProduct,
+  total,
 }: any) => {
   const handleDeleteFromCart = (productId: any) => {
     dispatch(removeCart(productId));
@@ -112,7 +116,7 @@ export const Cart = ({
 
         <Total>
           <span className="title">TOTAL</span>
-          <strong className="text">R$1920,28</strong>
+          <strong className="text">{total}</strong>
         </Total>
       </Footer>
     </ContainerCart>
@@ -120,7 +124,15 @@ export const Cart = ({
 };
 
 const mapStateToProps = (state: any) => ({
-  products: state.cart,
+  products: state.cart.map((product: Product) => ({
+    ...product,
+    subtotal: formatPrice(product.price * product.amount),
+  })),
+  total: formatPrice(
+    state.cart.reduce((total: number, product: Product) => {
+      return total + product.price * product.amount;
+    }, 0),
+  ),
 });
 
 const mapDispatchToPros = (dispatch: any) =>

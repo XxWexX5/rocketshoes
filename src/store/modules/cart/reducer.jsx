@@ -12,16 +12,10 @@ export default function cart(state = [], action) {
 
         if (productIndex >= 0) {
           draft[productIndex].amount += 1;
-          draft[productIndex].subtotal = formatPrice(
-            draft[productIndex].price * (draft[productIndex].amount || 1),
-          );
         } else {
           draft.push({
             ...action.product,
             amount: 1,
-            subtotal: formatPrice(
-              action.product.price * (action.product.amount || 1),
-            ),
           });
         }
       });
@@ -32,9 +26,6 @@ export default function cart(state = [], action) {
           (product) => product.id === action.productId,
         );
         draft[productIndex].amount += 1;
-        draft[productIndex].subtotal = formatPrice(
-          draft[productIndex].price * draft[productIndex].amount,
-        );
       });
 
     case '@cart/outAmountProducts':
@@ -45,9 +36,6 @@ export default function cart(state = [], action) {
         if (draft[productIndex].amount > 1) {
           draft[productIndex].amount -= 1;
         }
-        draft[productIndex].subtotal = formatPrice(
-          draft[productIndex].price * draft[productIndex].amount,
-        );
       });
 
     case '@cart/delete':
